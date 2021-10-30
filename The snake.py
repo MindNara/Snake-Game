@@ -11,15 +11,15 @@ red = (213, 50, 80)
 green = (0, 255, 0)
 blue = (50, 153, 213)
  
-dis_width = 600
-dis_height = 400
+dis_width = 1000
+dis_height = 800
  
 dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption('Snake Game by Edureka')
+pygame.display.set_caption("A Snake that's not a snake")
  
 clock = pygame.time.Clock()
  
-snake_block = 10
+snake_block = 20
 snake_speed = 15
  
 font_style = pygame.font.SysFont("bahnschrift", 25)
@@ -38,18 +38,19 @@ def message(msg, color):
 def gameLoop():
     game_over = False
     game_close = False
- 
+
     x1 = dis_width / 2
     y1 = dis_height / 2
- 
+
     x1_change = 0
     y1_change = 0
- 
+
     snake_List = []
     Length_of_snake = 1
+    snake_speed = 15
  
-    foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-    foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+    foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+    foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
  
     while not game_over:
  
@@ -107,8 +108,8 @@ def gameLoop():
         pygame.display.update()
  
         if x1 == foodx and y1 == foody:
-            foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
-            foody = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
+            foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+            foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
             Length_of_snake += 1
  
         clock.tick(snake_speed)
