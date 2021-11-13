@@ -1,29 +1,27 @@
 import pygame
 import random
- 
+import sys
+from pygame.locals import *
+
 pygame.init()
- 
-white = (255, 255, 255)
+
 yellow = (255, 255, 102)
 black = (0, 0, 0)
 red = (213, 50, 80)
-green = (0, 255, 0)
-blue = (50, 153, 213)
- 
+
 dis_width = 1000
 dis_height = 800
- 
+
 dis = pygame.display.set_mode((dis_width, dis_height))
-pygame.display.set_caption("A Snake that's not a snake")
+pygame.display.set_caption("The Snake that's not a snake")
+
 bg = pygame.image.load("background.png")
-pygame.mixer.music.load("music.mp3")
-pygame.mixer.music.play(-1)
+bg_menu = pygame.image.load("bg menu game.png")
 
 clock = pygame.time.Clock()
- 
+
 snake_block = 20
-snake_speed = 15
- 
+
 font_style = pygame.font.SysFont("bahnschrift", 40)
 score_font = pygame.font.SysFont("comicsansms", 35)
 
@@ -38,10 +36,10 @@ def our_snake(snake_block, snake_list, colors):
  
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width / 6, dis_height / 3])
+    dis.blit(mesg, [dis_width / 20, dis_height / 2.5])
  
  
-def gameLoop():
+def game():
     game_over = False
     game_close = False
 
@@ -54,6 +52,9 @@ def gameLoop():
     snake_List = []
     Length_of_snake = 1
     snake_speed = 15
+    
+    pygame.mixer.music.load("music.mp3")
+    pygame.mixer.music.play(-1)
  
     foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
     foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
@@ -63,12 +64,10 @@ def gameLoop():
     random_colors = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
     while not game_over:
- 
         while game_close == True:
-            dis.fill(blue)
             dis.blit(bg, [0, 0]) 
-            message("You Lost! Press C-Play Again or Q-Quit", red)
-
+            message("You Lost! Press C-Play Again or Q-Quit or M-Menu", red)
+            your_score(Length_of_snake - 1)
             pygame.display.update()
  
             for event in pygame.event.get():
@@ -77,7 +76,10 @@ def gameLoop():
                         game_over = True
                         game_close = False
                     if event.key == pygame.K_c:
-                        gameLoop()
+                        game()
+                    if event.key == pygame.K_m:
+                        pygame.mixer.music.stop ()
+                        main_menu()
  
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -108,6 +110,7 @@ def gameLoop():
         snake_Head.append(x1)
         snake_Head.append(y1)
         snake_List.append(snake_Head)
+
         if len(snake_List) > Length_of_snake:
             del snake_List[0]
  
@@ -128,7 +131,7 @@ def gameLoop():
             foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
             Length_of_snake += 1
         
-        if ((Length_of_snake - 1) == num) or ((Length_of_snake - 2) == num):
+        if (Length_of_snake - 1) == num:
             colors = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             num += 10
             snake_speed += 1
@@ -138,5 +141,57 @@ def gameLoop():
     pygame.quit()
     quit()
  
+ click = False
  
-gameLoop()
+ def main_menu():
+    while True:
+        dis.blit(bg_menu, [0, 0])
+        mx, my = pygame.mouse.get_pos()
+
+        button_play = pygame.Rect(120, 296, 200, 50)
+        button_credits = pygame.Rect(120, 371, 200, 50)
+        button_exit = pygame.Rect(120, 446, 200, 50)
+
+        if button_play.collidepoint((mx, my)):
+            if click:
+                game()
+        if button_credits.collidepoint((mx, my)):
+            if click:
+                credits()
+        if button_exit.collidepoint((mx, my)):
+            if click:
+                quit()
+
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+
+        pygame.display.update()
+        clock.tick(60)
+
+def credits():
+    running = True
+    while running:
+        dis.fill((0,0,0)) # เพิ่มเครดิต
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+
+        pygame.display.update()
+        clock.tick(60)
+
+main_menu()
