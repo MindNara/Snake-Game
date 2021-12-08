@@ -16,8 +16,8 @@ dis = pygame.display.set_mode((dis_width, dis_height))
 pygame.display.set_caption("The Snake that's not a snake")
 
 bg = pygame.image.load("background.png")
-bg_menu = pygame.image.load("bg menu game.png")
-bg_credits = pygame.image.load("Credits.png")
+menu_bg = pygame.image.load("game menu bg.png")
+credits_bg = pygame.image.load("credits bg.png")
 
 clock = pygame.time.Clock()
 
@@ -146,7 +146,7 @@ def game():
  
  def main_menu():
     while True:
-        dis.blit(bg_menu, [0, 0])
+        dis.blit(menu_bg, [0, 0])
         mx, my = pygame.mouse.get_pos()
 
         button_play = pygame.Rect(120, 296, 200, 50)
@@ -182,7 +182,7 @@ def game():
 def credits():
     running = True
     while running:
-        dis.blit(bg_credits, [0, 0]) # bg credits
+        dis.blit(credits_bg, [0, 0]) # bg credits
 
         for event in pygame.event.get():
             if event.type == QUIT:
