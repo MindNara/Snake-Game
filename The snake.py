@@ -17,6 +17,7 @@ pygame.display.set_caption("The Snake that's not a snake")
 
 bg = pygame.image.load("background.png")
 bg_menu = pygame.image.load("bg menu game.png")
+bg_credits = pygame.image.load("Credits.png")
 
 clock = pygame.time.Clock()
 
@@ -181,7 +182,7 @@ def game():
 def credits():
     running = True
     while running:
-        dis.fill((0,0,0)) # เพิ่มเครดิต
+        dis.blit(bg_credits, [0, 0]) # bg credits
 
         for event in pygame.event.get():
             if event.type == QUIT:
