@@ -58,6 +58,9 @@ def game():
     foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
     foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
 
+    food_bonus_x = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+    food_bonus_y = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+
     num = 10
     colors = black
     random_colors = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -109,6 +112,8 @@ def game():
         snake_Head.append(y1)
         snake_List.append(snake_Head)
 
+        pygame.draw.rect(dis, yellow, [food_bonus_x, food_bonus_y, snake_block, snake_block])
+
         if len(snake_List) > Length_of_snake:
             del snake_List[0]
 
@@ -128,6 +133,10 @@ def game():
             foodx = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
             foody = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
             Length_of_snake += 1
+        elif x1 == food_bonus_x and y1 == food_bonus_y:
+            food_bonus_x = round(random.randrange(0, dis_width - snake_block) / 20.0) * 20.0
+            food_bonus_y = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
+            Length_of_snake += 2
 
         if (Length_of_snake - 1) == num:
             colors = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
