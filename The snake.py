@@ -138,7 +138,7 @@ def game():
             food_bonus_y = round(random.randrange(0, dis_height - snake_block) / 20.0) * 20.0
             Length_of_snake += 2
 
-        if (Length_of_snake - 1) == num:
+        if (Length_of_snake - 1) == num or (Length_of_snake - 2) == num:
             colors = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             num += 10
             snake_speed += 1
